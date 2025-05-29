@@ -1,4 +1,32 @@
-import { BarChart2, Building2, TrendingUp } from "lucide-react";
+export interface Testimonial {
+  image: string;
+  quote: string;
+  author: string;
+  role: string;
+  company: string;
+  impact: string;
+}
+
+export interface CareerOutcome {
+  title: string;
+  value: string;
+}
+
+export interface Module {
+  title: string;
+  duration: string;
+  description: string;
+  weeks: number;
+  hours: number;
+  projects: number;
+  quizzes: number;
+  videoId: string;
+}
+
+export interface Price {
+  monthly: string;
+  fullCourse: string;
+}
 
 export interface Course {
   id: string;
@@ -12,35 +40,12 @@ export interface Course {
   timeline: string;
   lastUpdated: string;
   languages: string[];
-  price: {
-    monthly: string;
-    fullCourse: string;
-  };
+  price: Price;
   description: string;
   skills: string[];
-  modules: {
-    title: string;
-    duration: string;
-    description: string;
-    weeks: number;
-    hours: number;
-    projects: number;
-    quizzes: number;
-    videoId:string;
-  }[];
-  testimonials: {
-    image: string;
-    quote: string;
-    author: string;
-    role: string;
-    company: string;
-    impact: string;
-  }[];
-  careerOutcomes: {
-    title: string;
-    value: string;
-    icon?: React.ComponentType<{ className?: string }>;
-  }[];
+  modules: Module[];
+  testimonials: Testimonial[];
+  careerOutcomes: CareerOutcome[];
 }
 export const courses: Course[] = [
   {
@@ -209,12 +214,10 @@ export const courses: Course[] = [
       {
         title: "Average Salary",
         value: "$90,000/year",
-        icon: BarChart2,
       },
       {
         title: "Job Growth",
         value: "+30% (2020-2030)",
-        icon: TrendingUp,
       },
     ],
   },
@@ -292,12 +295,10 @@ export const courses: Course[] = [
       {
         title: "Average Salary",
         value: "$100,000/year",
-        icon: BarChart2,
       },
       {
         title: "Job Growth",
         value: "+35% (2020-2030)",
-        icon: Building2,
       },
     ],
   },
@@ -375,13 +376,151 @@ export const courses: Course[] = [
       {
         title: "Average Salary",
         value: "$95,000/year",
-        icon: BarChart2,
       },
       {
         title: "Job Growth",
         value: "+20% (2020-2030)",
-        icon: Building2,
       },
     ],
   },
+  {
+    id: "ibm-back-end-development",
+    title: "IBM Back-End Development",
+    provider: "IBM",
+    type: "Professional Certificate",
+    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=800&q=80",
+    rating: "4.6",
+    students: "500K+ learners",
+    level: "Beginner level",
+    timeline: "6 months at 8 hrs/week",
+    lastUpdated: "April 2024",
+    languages: ["English"],
+    price: {
+      monthly: "$45/month",
+      fullCourse: "$220 one-time",
+    },
+    description: `Learn back-end development with IBM. Master server-side technologies and databases to build robust applications.`,
+    skills: [
+      "Node.js",
+      "Express.js",
+      "Databases",
+      "API Development",
+      "Back-End Development",
+    ],
+    modules: [
+      {
+        title: "Intro to Back-End",
+        duration: "4.6 ★★★★☆ (20,000 ratings)",
+        description: "Basics of server-side programming.",
+        weeks: 4,
+        hours: 16,
+        projects: 2,
+        quizzes: 2,
+        videoId: "",
+      },
+    ],
+    testimonials: [],
+    careerOutcomes: [],
+  },
+  {
+    id: "ibm-full-stack-software-developer",
+    title: "IBM Full Stack Software Developer",
+    provider: "IBM",
+    type: "Professional Certificate",
+    image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=800&q=80",
+    rating: "4.7",
+    students: "600K+ learners",
+    level: "Intermediate level",
+    timeline: "7 months at 10 hrs/week",
+    lastUpdated: "April 2024",
+    languages: ["English"],
+    price: {
+      monthly: "$50/month",
+      fullCourse: "$250 one-time",
+    },
+    description: `Become a full stack developer with IBM. Learn both front-end and back-end technologies.`,
+    skills: [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Node.js",
+      "React",
+      "Full Stack Development",
+    ],
+    modules: [
+      {
+        title: "Full Stack Basics",
+        duration: "4.7 ★★★★☆ (25,000 ratings)",
+        description: "Overview of full stack development.",
+        weeks: 5,
+        hours: 20,
+        projects: 3,
+        quizzes: 2,
+        videoId: "",
+      },
+    ],
+    testimonials: [],
+    careerOutcomes: [],
+  },
+  {
+    id: "ibm-devops-and-software-engineering",
+    title: "IBM DevOps and Software Engineering",
+    provider: "IBM",
+    type: "Professional Certificate",
+    image: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=800&q=80",
+    rating: "4.8",
+    students: "550K+ learners",
+    level: "Intermediate level",
+    timeline: "6 months at 9 hrs/week",
+    lastUpdated: "April 2024",
+    languages: ["English"],
+    price: {
+      monthly: "$48/month",
+      fullCourse: "$230 one-time",
+    },
+    description: `Master DevOps and software engineering with IBM. Learn CI/CD, automation, and cloud deployment.`,
+    skills: [
+      "DevOps",
+      "CI/CD",
+      "Cloud Deployment",
+      "Software Engineering",
+    ],
+    modules: [
+      {
+        title: "DevOps Basics",
+        duration: "4.8 ★★★★★ (18,000 ratings)",
+        description: "Introduction to DevOps principles.",
+        weeks: 4,
+        hours: 16,
+        projects: 2,
+        quizzes: 2,
+        videoId: "",
+      },
+    ],
+    testimonials: [],
+    careerOutcomes: [],
+  },
 ];
+
+// Tag options for filtering
+const courseTags = [
+  { label: "All", value: "all" },
+  { label: "Programming", value: "Programming" },
+  { label: "Design", value: "Design" },
+  { label: "Marketing", value: "Marketing" },
+  { label: "AI & ML", value: "AI & ML" },
+  { label: "Business", value: "Business" },
+  { label: "Personal Development", value: "Personal Development" },
+  { label: "Data Science", value: "Data Science" },
+];
+
+// Tag assignment logic (customize as needed)
+export function getCourseTag(course: { title: string; type: string }): string {
+  if (course.title.match(/AI|ML|Artificial Intelligence|Machine Learning/i) || course.type.match(/AI|ML/i)) return "AI & ML";
+  if (course.title.match(/Design/i) || course.type.match(/Design/i)) return "Design";
+  if (course.title.match(/Marketing/i) || course.type.match(/Marketing/i)) return "Marketing";
+  if (course.title.match(/Business|Management/i) || course.type.match(/Business/i)) return "Business";
+  if (course.title.match(/Personal Development/i) || course.type.match(/Personal Development/i)) return "Personal Development";
+  if (course.title.match(/Data Science/i) || course.type.match(/Data Science/i)) return "Data Science";
+  return "Programming";
+}

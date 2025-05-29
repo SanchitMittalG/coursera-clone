@@ -32,6 +32,8 @@ function CourseDetails() {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [selectedmoduleindex, setselectedmoduleindex] = useState(0);
   const [showmodulepage, setshowmodulepage] = useState(false);
+  // Offline indicator state
+  const [isOfflineAvailable, setIsOfflineAvailable] = useState(false);
   const router = useRouter();
   const { id } = router.query; // Get course ID from route
   const [course, setCourse] = useState<Course | null>(null);
@@ -41,6 +43,42 @@ function CourseDetails() {
       setCourse(foundCourse || null);
     }
   }, [id]);
+
+  // Check if course is available offline
+  useEffect(() => {
+    if (id) {
+      setIsOfflineAvailable(!!localStorage.getItem(`offline-course-${id}`));
+    }
+  }, [id]);
+
+  // On component mount, if offline data exists, use it when offline
+  useEffect(() => {
+    if (!navigator.onLine && id) {
+      const offlineData = localStorage.getItem(`offline-course-${id}`);
+      if (offlineData) {
+        try {
+          setCourse(JSON.parse(offlineData));
+        } catch (e) {
+          // fallback to normal
+        }
+      }
+    }
+  }, [id]);
+
+  // Download course for offline use
+  const handleDownloadOffline = () => {
+    if (course) {
+      // Exclude videoId from modules for offline
+      const offlineCourse = {
+        ...course,
+        modules: course.modules.map(({ videoId, ...rest }) => rest),
+      };
+      localStorage.setItem(`offline-course-${course.id}`, JSON.stringify(offlineCourse));
+      setIsOfflineAvailable(true);
+      alert('Course saved for offline access!');
+    }
+  };
+
   if (!course) {
     return <div className="text-center text-red-500">Course not found!</div>;
   }
@@ -341,6 +379,13 @@ function CourseDetails() {
                 >
                   Start Free Trial
                 </button>
+                <button
+                  className="px-8 py-3 bg-gray-200 text-gray-800 font-semibold rounded-sm hover:bg-gray-300 transition-colors"
+                  onClick={handleDownloadOffline}
+                  disabled={isOfflineAvailable}
+                >
+                  {isOfflineAvailable ? 'Available Offline' : 'Download for Offline'}
+                </button>
                 <div className="flex items-center space-x-4">
                   <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
                     <BookmarkPlus className="h-6 w-6 text-gray-600" />
@@ -429,26 +474,15 @@ function CourseDetails() {
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-2xl font-bold mb-8">Career Outcomes</h2>
           <div className="grid grid-cols-3 gap-8">
-            {course.careerOutcomes.map((outcome, index) => {
-              const IconComponent = outcome.icon; // Now it's already a React component
-
-              return (
-                <div
-                  key={index}
-                  className="bg-gray-50 rounded-lg p-6 hover:shadow-md transition-shadow"
-                >
-                  {IconComponent && (
-                    <IconComponent className="h-8 w-8 text-[#0056D2] mb-4" />
-                  )}
-                  <h3 className="text-lg font-semibold mb-2">
-                    {outcome.title}
-                  </h3>
-                  <p className="text-2xl font-bold text-[#0056D2]">
-                    {outcome.value}
-                  </p>
-                </div>
-              );
-            })}
+            {course.careerOutcomes.map((outcome, index) => (
+              <div
+                key={index}
+                className="bg-gray-50 rounded-lg p-6 hover:shadow-md transition-shadow"
+              >
+                <div className="text-lg font-semibold mb-2">{outcome.title}</div>
+                <div className="text-gray-700">{outcome.value}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
